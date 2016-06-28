@@ -9,17 +9,25 @@ const MENU = {
 	Oysters: 17.99
 }
 
+// Sales tax
+const SALESTAX = 0.06;
+
+const TIP = .2;
+
 // Diner Class
 class Diner	{
 
-	constructor(menu) {
+	constructor(menu, salesTax, tipPerc) {
 		this.menu = menu;
+		this.salesTax = salesTax;
+		this.tipPerc = tipPerc;
 		this.dishes = [];
 		this.billDiner = 0;
 		this.billTipDiner = 0;
 		this.taxDue = 0;
 	 }
 
+	 // Randomly choose one dish from menu
 	 chooseRandomDish(menu)	{
 		 let dishes = Object.keys(menu);
 		 let choice = dishes[ Math.floor(Math.random()*dishes.length)];
@@ -27,21 +35,36 @@ class Diner	{
 		 return dish;
 	 }
 
+	 // Store dish into dishes object
 	 storeDishDecision(dish) {
 		 this.dishes.push(dish);
 	 }
 
-	 calculateBillDiner() {
-
+	 // Calc total cost of dishes chosen (subTotal)
+	 calculateSubTotalDiner(dishes) {
+		 let subTotal = 0;
+		 for(var el in dishes) {
+			 if(dishes.hasOwnProperty(el)) {
+				 subTotal += parseFloat(dishes[el]);
+			 }
+		 }
+		 return subTotal;
+	 }
+	 // Calc tip based on subTotal
+	 calculateTipDiner(subTotal, tipPerc) {
+		 return (subTotal * tipPerc);
 	 }
 
-	 calculateTipDiner(billDiner) {
+	 // Calc tax bill for diner
+	 calculateTaxDiner(subTotal, salesTax) {
+		 return (subTotal * salesTax);
+		}
 
+	 // Calc total bill due for diner
+	 calculateBillTotalDiner(subTotal, tip, tax) {
+		 return (subTotal + tip + tax);
 	 }
 
-	 calculateTaxDiner(dishes) {
-
-	 }
 }
 
 // Table Class
