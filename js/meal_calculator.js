@@ -68,8 +68,8 @@ class Table {
 
     // The Table class will hold the Diner class
 
-    constructor(diner) {
-        this.diner = diner;
+    constructor(...diner) { // P.S. I love you ES6!!!
+        this.diners = diner;
     }
 }
 
@@ -110,9 +110,12 @@ class Controller {
 }
 const diner1 = new Diner(MENU);
 const diner2 = new Diner(MENU);
-const table = new Table (diner1, diner2); // Holds diner1 & diner2
+const diner3 = new Diner(MENU);
+const table = new Table (diner1, diner2, diner3); // Holds diners
 const bill = new Bill(table); // Holds table (diner 1 & diner 2)
-// const view = new view(); // To be entered into controller
-const controller = new Controller(bill); // Holds Bill (table)
+const view = new View(); // To be entered into controller
+const controller = new Controller(bill, view); // Holds Bill (table)
 
 console.log(table);
+console.log(bill);
+console.log(controller);

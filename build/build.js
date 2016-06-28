@@ -144,10 +144,15 @@
 	
 	// The Table class will hold the Diner class
 	
-	function Table(diner) {
+	function Table() {
 	    _classCallCheck(this, Table);
 	
-	    this.diner = diner;
+	    for (var _len = arguments.length, diner = Array(_len), _key = 0; _key < _len; _key++) {
+	        diner[_key] = arguments[_key];
+	    }
+	
+	    // P.S. I love you ES6!!!
+	    this.diners = diner;
 	};
 	
 	// Bill Class (Method)
@@ -196,12 +201,15 @@
 	
 	var diner1 = new Diner(MENU);
 	var diner2 = new Diner(MENU);
-	var table = new Table(diner1, diner2); // Holds diner1 & diner2
+	var diner3 = new Diner(MENU);
+	var table = new Table(diner1, diner2, diner3); // Holds diners
 	var bill = new Bill(table); // Holds table (diner 1 & diner 2)
-	// const view = new view(); // To be entered into controller
-	var controller = new Controller(bill); // Holds Bill (table)
+	var view = new View(); // To be entered into controller
+	var controller = new Controller(bill, view); // Holds Bill (table)
 	
 	console.log(table);
+	console.log(bill);
+	console.log(controller);
 
 /***/ }
 /******/ ]);
