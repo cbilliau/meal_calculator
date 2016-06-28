@@ -8,22 +8,18 @@ const MENU = {
     Oysters: 17.99
 }
 
-// Sales tax
-const SALESTAX = 0.06;
-
-const TIP = .18;
-
 // Diner Class
 class Diner {
 
-    constructor(menu, salesTax, tipPerc) {
+    constructor(menu) {
         this.menu = menu;
-        this.salesTax = salesTax;
-        this.tipPerc = tipPerc;
+        this.salesTax = .06;
+        this.tipPerc = .2;
         this.dishes = [];
         this.billDiner = 0;
         this.billTipDiner = 0;
         this.taxDue = 0;
+				this.billTotalDiner = 0;
     }
 
     // Randomly choose one dish from menu
@@ -70,21 +66,17 @@ class Diner {
 // Table Class
 class Table {
 
-    /*
-     * The Table class will hold the Diner class
-     */
+    // The Table class will hold the Diner class
 
     constructor(diner) {
         this.diner = diner;
     }
 }
 
-// Bill Class
+// Bill Class (Method)
 class Bill {
 
-    /*
-     * The Bill class will hold the Table class
-     */
+    // The Bill class will hold the Table class
 
     constructor(table) {
         this.table = table;
@@ -92,5 +84,35 @@ class Bill {
         this.billTipTable = 0;
     }
 
+		// Routine to calc diner totals
+		// Use for subTotal, tip, and tax
+		calculateTotalsTable() {
+				let sum = 0;
+				for (var i=0; i < arguments.length; i++) {
+					sum += parseInt(arguments[i]);
+				}
+				return sum;
+		}
+}
+
+class View {
+		constructor() {}
+}
+
+class Controller {
+
+		constructor(bill, view) {
+			this.bill = bill;
+			this.view = view;
+		}
+
 
 }
+const diner1 = new Diner(MENU);
+const diner2 = new Diner(MENU);
+const table = new Table (diner1, diner2); // Holds diner1 & diner2
+const bill = new Bill(table); // Holds table (diner 1 & diner 2)
+// const view = new view(); // To be entered into controller
+const controller = new Controller(bill); // Holds Bill (table)
+
+console.log(table);
