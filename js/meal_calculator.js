@@ -23,10 +23,13 @@ class Diner {
     }
 
     // Randomly choose one dish from menu
-    chooseRandomDish(menu) {
+    chooseRandomDish(num, menu) {
+        let dish = [];
         let dishes = Object.keys(menu);
-        let choice = dishes[Math.floor(Math.random() * dishes.length)];
-        let dish = menu[choice];
+        for (var i = 0; i <= num; i++) {
+          let choice = dishes[Math.floor(Math.random() * dishes.length)];
+          dish.push(menu[choice]);
+        }
         return dish;
     }
 
@@ -106,16 +109,30 @@ class Controller {
 			this.view = view;
 		}
 
+		chooseDinerMeal(diner, num, menu) {
+      return diner.chooseRandomDish(num, menu);
+    }
+
+    recordMealChoices(diner, dishes) {
+      diner.dishes.push(dishes);
+    }
+
 
 }
+
+// Instances
 const diner1 = new Diner(MENU);
 const diner2 = new Diner(MENU);
-const diner3 = new Diner(MENU);
-const table = new Table (diner1, diner2, diner3); // Holds diners
+const table = new Table (diner1, diner2); // Holds diners
 const bill = new Bill(table); // Holds table (diner 1 & diner 2)
 const view = new View(); // To be entered into controller
 const controller = new Controller(bill, view); // Holds Bill (table)
 
+
+let dish = controller.chooseDinerMeal(diner1, 2, MENU);
+controller.recordMealChoices(diner1,dish);
+console.log(dish);
+console.log(diner1.dishes);
 console.log(table);
 console.log(bill);
 console.log(controller);
