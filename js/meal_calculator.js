@@ -16,7 +16,7 @@ class Diner {
         this.salesTax = .06;
         this.tipPerc = .2;
         this.dishes = [];
-        this.bill = 0;
+        this.billSub = 0;
         this.billTip = 0;
         this.billTax = 0;
         this.billTotal = 0;
@@ -52,18 +52,7 @@ class Diner {
     // Store subTotal
     storeDinerSubTotal(diner, subTotal) {
         let amount = Number(subTotal);
-        this.bill = amount;
-    }
-
-    // Calc tip based on subTotal
-    calculateTipDiner(subTotal, tipPerc) {
-        return (subTotal * tipPerc).toFixed(2);
-    }
-
-    // Store tip
-    storeTipDiner(diner, tip) {
-        let amount = Number(tip);
-        this.billTip = amount;
+        this.billSub = amount;
     }
 
     // Calc tax bill for diner
@@ -71,18 +60,28 @@ class Diner {
         return (subTotal * salesTax).toFixed(2);
     }
 
-    // Store tip
+    // Store tax
     storeTaxDiner(diner, tax) {
         let amount = Number(tax);
         this.billTax = amount;
     }
 
+    // Store tip
+    storeTipDiner(diner, tip) {
+        let amount = Number(tip);
+        this.billTip = amount;
+    }
     // Calc total bill due for diner
-    calculateBillTotalDiner(subTotal, tip, tax) {
+    calculateBillTotalDiner(subTotal, tax, tip) {
         let bill = Number(subTotal);
         let taxes = Number(tax);
-        let tips = Number(tip);
-        let total = (bill + taxes + tips);
+        // If/Esle for calc w/ or w/o tip
+        if (tip == null) {
+            var total = (bill + taxes);
+          } else {
+            var tips = Number(tip)
+            var total = (bill + taxes + tips);
+        };
         return total.toFixed(2);
     }
 
@@ -100,8 +99,33 @@ class Table {
 
     constructor(...diner) { // P.S. I love you ES6!!!
         this.diners = diner;
+        this.tableSub = 0;
+        this.tableTip = 0;
+        this.tableTax = 0;
+        this.tableTotal = 0;
+    }
+
+    // Sum subtotal for table from diners
+    sumTableSub(){
+
+    }
+
+    // Sum tip for table from diners
+    sumTableTip(){
+
+    }
+
+    // Sum tax for table from diners
+    sumTableTax() {
+
+    }
+
+    // Sum total for table from diners
+    sumTableTotal() {
+
     }
 }
+
 
 // Bill Class (Method)
 class Bill {
@@ -139,6 +163,28 @@ class Controller {
         return diner.chooseRandomDish(num, menu);
     }
 
+// Diner call controllers
+
+    /*
+     * Calculate costs for diner
+     */
+
+    getsubTotal(diner, dishes) {
+      return diner.calculateSubTotalDiner(dishes);
+    }
+
+    getTaxDue(diner, subTotal) {
+      return diner.calculateTaxDiner(subTotal, diner.salesTax);
+    }
+
+    getBillTotal(diner, subTotal, tax, tip) {
+      return diner.calculateBillTotalDiner(subTotal, tax, tip);
+    }
+
+    /*
+     * Assign data to diner
+     */
+
     recordMeal(diner, dishes) {
         diner.storeDinerDishes(dishes);
     }
@@ -159,21 +205,12 @@ class Controller {
         diner.storeTotalDiner(diner, billTotal);
     }
 
-    getsubTotal(diner, dishes) {
-      return diner.calculateSubTotalDiner(dishes);
-    }
+// Bill controller
 
-    getTipDue(diner, subTotal) {
-      return diner.calculateTipDiner(subTotal, diner.tipPerc);
-    }
+    // getTableBill
 
-    getTaxDue(diner, subTotal) {
-      return diner.calculateTaxDiner(subTotal, diner.salesTax);
-    }
 
-    getBillTotal(diner, subTotal, tip, tax) {
-      return diner.calculateBillTotalDiner(subTotal, tip, tax);
-    }
+
 }
 
 // Instances
@@ -188,6 +225,9 @@ const view = new View(); // To be entered into controller
 const controller = new Controller(bill, view); // Holds Bill (table)
 
 
+
+// ---------Sand Box -----------
+
 let dishes = controller.chooseMeals(diner1, 2, MENU);
 controller.recordMeal(diner1, dishes);
 
@@ -195,21 +235,15 @@ let subTotal = controller.getsubTotal(diner1, dishes);
 
 controller.recordSubTotal(diner1, subTotal);
 
-let tip = controller.getTipDue(diner1, subTotal);
-controller.recordTip(diner1, tip);
-
 let tax = controller.getTaxDue(diner1, subTotal);
 controller.recordTax(diner1, tax);
 
-let billTotal = controller.getBillTotal(diner1, subTotal, tip, tax);
+let billTotal = controller.getBillTotal(diner1, subTotal, tax);
 controller.recordBillTotal(diner1, billTotal);
 
+// ----- Logs -------------
 
-// console.log('subTotal $' + subTotal);
-// console.log('tax $' + tax);
-// console.log('tip $' + tip);
-// console.log('bill total $' + billTotal);
-//
 // console.log(table);
 // console.log(bill);
-// console.log(controller);
+console.log(bill.table.diners);
+console.log(controller);
