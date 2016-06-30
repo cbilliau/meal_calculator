@@ -5,6 +5,7 @@
   "main": "./js/meal_calculator.js",
   "scripts": {
     "build": "webpack --progress --colors",
+    "build:minify": "webpack --minify --progress --colors",
     "start": "webpack --progress --colors --watch"
   },
   "keywords": [
@@ -18,6 +19,7 @@
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
+    "uglify-js": "^2.6.4",
     "webpack": "^1.13.1"
   }
 }
