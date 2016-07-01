@@ -8,7 +8,7 @@ import Bill from './Modules/bill';
 import View from './Modules/view';
 import Controller from './Modules/controller';
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
 
     // Instanciate diner1 - must happen first
     let diner1 = new Diner(MENU);
@@ -80,4 +80,4 @@ document.addEventListener('DOMContentLoaded', () => {
         "Thank You. Come again!"
     )
 
-})
+// })
